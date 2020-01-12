@@ -90,12 +90,19 @@ AlaPalette alaPalCool = { 4, alaPalCool_ };
 
 int getStep(long t0, long t, int v)
 {
-  return ((millis()-t0)%t)*v/t;
+  return getStepFloat(t0, t, v);
 }
 
 float getStepFloat(long t0, long t, float v)
 {
-  return ((millis()-t0)%t)*v/t;
+  if (playOnce){
+    float r = _min(((millis()-t0))*v/t, v);
+    if (r == v)
+      playedOnce = true;
+    return r;
+  }
+  else
+    return ((millis()-t0)%t)*v/t;
 }
 
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max)
@@ -103,6 +110,7 @@ float mapfloat(float x, float in_min, float in_max, float out_min, float out_max
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-
+bool playOnce = false;
+bool playedOnce = false;
 
 

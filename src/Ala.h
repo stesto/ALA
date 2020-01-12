@@ -64,6 +64,7 @@ along with The Arduino ALA library.  If not, see
 #define ALA_FADEINOUT 303
 #define ALA_GLOW 304
 #define ALA_PLASMA 305
+#define ALA_FADETO 306
 
 #define ALA_FADECOLORS 351
 #define ALA_FADECOLORSLOOP 352
@@ -126,9 +127,9 @@ struct AlaColor
 */
     AlaColor sum(AlaColor color)
     {
-        int r0 = min(color.r + r, 255);
-        int g0 = min(color.g + g, 255);
-        int b0 = min(color.b + b, 255);
+        int r0 = _min(color.r + r, 255);
+        int g0 = _min(color.g + g, 255);
+        int b0 = _min(color.b + b, 255);
         return AlaColor(r0, g0, b0);
     }
 
@@ -142,9 +143,9 @@ struct AlaColor
 
     AlaColor scale(float k)
     {
-        int r0 = min(r*k, 255);
-        int g0 = min(g*k, 255);
-        int b0 = min(b*k, 255);
+        int r0 = _min(r*k, 255);
+        int g0 = _min(g*k, 255);
+        int b0 = _min(b*k, 255);
         return AlaColor(r0, g0, b0);
     }
 
@@ -257,5 +258,7 @@ int getStep(long t0, long t, int v);
 float getStepFloat(long t0, long t, float v);
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max);
 
+extern bool playOnce;
+extern bool playedOnce;
 
 #endif
